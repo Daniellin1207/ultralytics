@@ -79,6 +79,8 @@ from ultralytics.utils.torch_utils import (
     time_sync,
 )
 
+from ultralytics.nn.SEAttention import SEAttention
+
 try:
     import thop
 except ImportError:
@@ -985,6 +987,8 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
             if c2 != nc:
                 c2 = make_divisible(min(c2, max_channels) * width, 8)
             args = [c1, *args[1:]]
+        # elif m in {SEAttention}:
+        #     args = [ch[f], *args]
         else:
             c2 = ch[f]
 

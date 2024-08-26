@@ -83,6 +83,8 @@ from .transformer import (
     TransformerLayer,
 )
 
+
+from ultralytics.nn.SEAttention import (SEAttention)
 __all__ = (
     "Conv",
     "Conv2",
@@ -150,4 +152,5 @@ __all__ = (
     "Attention",
     "PSA",
     "SCDown",
+    "SEAttention",
 )

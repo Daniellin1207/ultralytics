@@ -5,7 +5,8 @@ from ultralytics import YOLO
 
 # Load a model
 # model = YOLO("yolov8n-cbam.yaml")  # build a new model from scratch
-model = YOLO("yolov8n-se.yaml")  # build a new model from scratch
+# model = YOLO("yolov8n-se.yaml")  # build a new model from scratch
+model = YOLO("yolov8n-ca.yaml")  # build a new model from scratch
 # model = YOLO("yolov8n.pt")  # load a pretrained model (recommended for training)
 
 # Use the model

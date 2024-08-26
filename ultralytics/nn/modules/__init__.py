@@ -84,7 +84,8 @@ from .transformer import (
 )
 
 
-from ultralytics.nn.SEAttention import (SEAttention)
+# from ultralytics.nn.modules.SEAttention import (SEAttention)
+# from ultralytics.nn.modules.CAAttention import (CoordAttention)
 __all__ = (
     "Conv",
     "Conv2",
@@ -152,5 +153,6 @@ __all__ = (
     "Attention",
     "PSA",
     "SCDown",
-    "SEAttention",
+    # "SEAttention",
+    # "CAAttention",
 )

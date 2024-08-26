@@ -79,8 +79,8 @@ from ultralytics.utils.torch_utils import (
     time_sync,
 )
 
-from ultralytics.nn.SEAttention import SEAttention
-
+from ultralytics.nn.modules.SEAttention import SEAttention # key code, otherwise torch.nn won't include SEAttention
+from ultralytics.nn.modules.CAAttention import CoordAttention
 try:
     import thop
 except ImportError:
@@ -987,8 +987,9 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
             if c2 != nc:
                 c2 = make_divisible(min(c2, max_channels) * width, 8)
             args = [c1, *args[1:]]
-        # elif m in {SEAttention}:
-        #     args = [ch[f], *args]
+        elif m in {SEAttention}:
+            c2 = ch[f] # 为了引用下SEAttention
+            # args = [ch[f], *args]
         else:
             c2 = ch[f]
 

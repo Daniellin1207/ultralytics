@@ -449,12 +449,23 @@ def plot_pr_curve(px, py, ap, save_dir=Path("pr_curve.png"), names=(), on_plot=N
     """Plots a precision-recall curve."""
     fig, ax = plt.subplots(1, 1, figsize=(9, 6), tight_layout=True)
     py = np.stack(py, axis=1)
-
+    pr_dict = dict()
+    pr_dict['px'] = px.tolist()
+    pr_dict['py'] = py.tolist()
     if 0 < len(names) < 21:  # display per-class legend if < 21 classes
         for i, y in enumerate(py.T):
             ax.plot(px, y, linewidth=1, label=f"{names[i]} {ap[i, 0]:.3f}")  # plot(recall, precision)
+            # pr_dict[names[i]] = y.tolist()
     else:
         ax.plot(px, py, linewidth=1, color="grey")  # plot(recall, precision)
+
+    # y = smooth(py.mean(0), 0.05)
+    # pr_dict['all'] = y.tolist()
+    import pandas as pd
+    dataformat = pd.DataFrame(pr_dict)
+    save_csvpath = save_dir.cwd()/(str(save_dir).replace('.png','.csv'))
+    dataformat.to_csv(save_csvpath,sep=',')
+
 
     ax.plot(px, py.mean(1), linewidth=3, color="blue", label="all classes %.3f mAP@0.5" % ap[:, 0].mean())
     ax.set_xlabel("Recall")
@@ -474,14 +485,36 @@ def plot_mc_curve(px, py, save_dir=Path("mc_curve.png"), names=(), xlabel="Confi
     """Plots a metric-confidence curve."""
     fig, ax = plt.subplots(1, 1, figsize=(9, 6), tight_layout=True)
 
+
+    flag = False
+    if str(save_dir).endswith('F1_curve.png'):
+        flag = True
+        pr_dict = dict()
+        pr_dict['px'] = px.tolist()
+
+
     if 0 < len(names) < 21:  # display per-class legend if < 21 classes
         for i, y in enumerate(py):
             ax.plot(px, y, linewidth=1, label=f"{names[i]}")  # plot(confidence, metric)
+            if flag:
+                pr_dict[names[i]] = y.tolist()
     else:
         ax.plot(px, py.T, linewidth=1, color="grey")  # plot(confidence, metric)
 
     y = smooth(py.mean(0), 0.05)
     ax.plot(px, y, linewidth=3, color="blue", label=f"all classes {y.max():.2f} at {px[y.argmax()]:.3f}")
+
+
+
+    if flag:
+        pr_dict['all'] = y.tolist()
+        import pandas as pd
+        dataformat = pd.DataFrame(pr_dict)
+        save_csvpath = save_dir.cwd()/(str(save_dir).replace('.png','.csv'))
+        dataformat.to_csv(save_csvpath,sep=',')
+
+
+
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
     ax.set_xlim(0, 1)

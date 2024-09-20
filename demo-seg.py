@@ -10,7 +10,9 @@ if __name__ == '__main__':
     # results = model.train(data='ultralytics/cfg/datasets/origin-seg.yaml', epochs=2000, imgsz=512)
     # metrics = model.val()
     # 预测结果
-    results = model.predict("origin-test.jpg",save = True)
+    local_save_img = "local1.png"
+    predict_img = "test1.jpg"
+    results = model.predict(predict_img,save = True)
     print(results)
     # 处理结果列表
     img = None
@@ -24,13 +26,13 @@ if __name__ == '__main__':
             masks_data = result.masks.data
             for index, mask in enumerate(masks_data):
                 mask = mask.cpu().numpy() * 255
-                cv2.imwrite("local1.png", mask)
+                cv2.imwrite(local_save_img, mask)
                 if img is not None:
                     img+=mask
                 else:
                     img = mask
 
-    tmp = OperateImg("local1.png",None)
+    tmp = OperateImg(local_save_img,None)
     tmp.OperateContours()
     cv2.imshow("mask",tmp.imageCopy)
     cv2.waitKey()

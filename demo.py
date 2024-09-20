@@ -24,8 +24,8 @@ se_yaml = "ultralytics/cfg/models/v8/yolov8-se.yaml"
 yolov8_yaml = "ultralytics/cfg/models/v8/yolov8.yaml"
 
 cbam_head_yaml =  "ultralytics/cfg/models/v8/yolov8-cbam-head.yaml"
-ca_head_yaml =  "ultralytics/cfg/models/v8/yolov8-se-head.yaml"
-se_head_yaml =  "ultralytics/cfg/models/v8/yolov8-ca-head.yaml"
+ca_head_yaml =  "ultralytics/cfg/models/v8/yolov8-ca-head.yaml"
+se_head_yaml =  "ultralytics/cfg/models/v8/yolov8-se-head.yaml"
 
 
 method_yamls = [ca_yaml,cbam_yaml,se_yaml,yolov8_yaml]
@@ -35,7 +35,7 @@ optimizers = ["Adam","NAdam","SGD","RAdam","RMSProp","AdamW"] #Adam, AdamW, NAda
 
 
 
-method_yamls = [ca_head_yaml,se_head_yaml,cbam_head_yaml,yolov8_yaml,ca_yaml,cbam_yaml,se_yaml]
+method_yamls = [ca_yaml]
 train_datas = [train_data]
 optimizers = ["Adam"]
 for optimizer in optimizers:

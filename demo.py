@@ -35,7 +35,7 @@ optimizers = ["Adam","NAdam","SGD","RAdam","RMSProp","AdamW"] #Adam, AdamW, NAda
 
 
 
-method_yamls = [ca_yaml]
+method_yamls = [ca_head_yaml]
 train_datas = [train_data]
 optimizers = ["Adam"]
 for optimizer in optimizers:

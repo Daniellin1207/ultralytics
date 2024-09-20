@@ -24,15 +24,18 @@ se_yaml = "ultralytics/cfg/models/v8/yolov8-se.yaml"
 yolov8_yaml = "ultralytics/cfg/models/v8/yolov8.yaml"
 
 cbam_head_yaml =  "ultralytics/cfg/models/v8/yolov8-cbam-head.yaml"
+ca_head_yaml =  "ultralytics/cfg/models/v8/yolov8-se-head.yaml"
+se_head_yaml =  "ultralytics/cfg/models/v8/yolov8-ca-head.yaml"
 
 
 method_yamls = [ca_yaml,cbam_yaml,se_yaml,yolov8_yaml]
 train_datas = [train_data,train_data_new]
+train_datas = [train_data]
 optimizers = ["Adam","NAdam","SGD","RAdam","RMSProp","AdamW"] #Adam, AdamW, NAdam, RAdam, RMSProp, SGD, auto
 
 
 
-method_yamls = [cbam_head_yaml]
+method_yamls = [ca_head_yaml,se_head_yaml,cbam_head_yaml,yolov8_yaml,ca_yaml,cbam_yaml,se_yaml]
 train_datas = [train_data]
 optimizers = ["Adam"]
 for optimizer in optimizers:
@@ -40,8 +43,20 @@ for optimizer in optimizers:
         for yaml in method_yamls:
             print("method_yaml:",yaml,"train_data:",data,"running...",optimizer,end = "\n\n\n\n",sep="\n")
             model = YOLO(yaml)
-            model.train(data = data,epochs = epochs,optimizer = optimizer)
+            model.train(data = data,epochs = epochs,optimizer = optimizer,name=optimizer+"/"+data+yaml)
             print(yaml,data,"running ENDDDDDDD...\n\n")
+
+
+
+# optimizer = "AdamW"
+# print("yolov8-ca is running...train_data_new")
+# for i in range(21,13,-1):
+#     model = YOLO("ultralytics/cfg/models/v8/yolov8s.yaml")  # build a new model from scratch
+#     model.train(data=train_data, epochs=i,optimizer = optimizer,name='yolov8s-train-PRCurve-new_'+str(i))  # train the model
+# print("yolov8-ca runs end")
+
+
+
 
 # print("yolov8-ca is running...train_data_new")
 # model = YOLO("ultralytics/cfg/models/v8/yolov8-ca.yaml")  # build a new model from scratch

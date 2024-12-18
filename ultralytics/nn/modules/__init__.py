@@ -82,6 +82,7 @@ from .transformer import (
     TransformerEncoderLayer,
     TransformerLayer,
 )
+from .CSPPC import CSPPC
 
 
 # from ultralytics.nn.modules.SEAttention import (SEAttention)
@@ -155,4 +156,5 @@ __all__ = (
     "SCDown",
     # "SEAttention",
     # "CAAttention",
+    "CSPPC",
 )

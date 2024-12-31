@@ -186,19 +186,34 @@ class DetectionValidator(BaseValidator):
             self.metrics.process(**stats)
         return self.metrics.results_dict
 
-    def print_results(self):
+    def print_results(self,fileName = "TrainTestFile.txt"):
         """Prints training/validation set metrics per class."""
-        pf = "%22s" + "%11i" * 2 + "%11.3g" * len(self.metrics.keys)  # print format
-        LOGGER.info(pf % ("all", self.seen, self.nt_per_class.sum(), *self.metrics.mean_results()))
+        pf = "%22s" + "%11i" * 2 + "%11.4g" * len(self.metrics.keys)  # print format
+        # LOGGER.info(pf % ("all", self.seen, self.nt_per_class.sum(), *self.metrics.mean_results()))
+        LOGGER.info(pf % ('all', self.seen, self.nt_per_class.sum(), self.metrics.mean_results()[0] * 100,
+                          self.metrics.mean_results()[1] * 100, self.metrics.mean_results()[1] * 100,
+                          self.metrics.mean_results()[3] * 100))
+        with open(fileName, 'w') as f:
+            print(pf % ('all', self.seen, self.nt_per_class.sum(), self.metrics.mean_results()[0] * 100,
+                          self.metrics.mean_results()[1] * 100, self.metrics.mean_results()[1] * 100,
+                          self.metrics.mean_results()[3] * 100),file = f)
+
         if self.nt_per_class.sum() == 0:
             LOGGER.warning(f"WARNING ⚠️ no labels found in {self.args.task} set, can not compute metrics without labels")
 
         # Print results per class
         if self.args.verbose and not self.training and self.nc > 1 and len(self.stats):
             for i, c in enumerate(self.metrics.ap_class_index):
-                LOGGER.info(
-                    pf % (self.names[c], self.nt_per_image[c], self.nt_per_class[c], *self.metrics.class_result(i))
-                )
+                # LOGGER.info(
+                #     pf % (self.names[c], self.nt_per_image[c], self.nt_per_class[c], *self.metrics.class_result(i))
+                # )
+                LOGGER.info(pf % (self.names[c], self.seen, self.nt_per_class[c], self.metrics.class_result(i)[0] * 100,
+                                  self.metrics.class_result(i)[1] * 100, self.metrics.class_result(i)[2] * 100,
+                                  self.metrics.class_result(i)[3] * 100))
+                with open(fileName, 'w') as f:
+                    print(pf % (self.names[c], self.seen, self.nt_per_class[c], self.metrics.class_result(i)[0] * 100,
+                                  self.metrics.class_result(i)[1] * 100, self.metrics.class_result(i)[2] * 100,
+                                  self.metrics.class_result(i)[3] * 100), file=f)
 
         if self.args.plots:
             for normalize in True, False:

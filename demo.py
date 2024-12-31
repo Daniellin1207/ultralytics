@@ -24,9 +24,9 @@ if __name__ == '__main__':
     train_data = "ultralytics/cfg/datasets/origin.yaml"
     train_data_new = "ultralytics/cfg/datasets/origin_new.yaml"
 
-    ca_yaml = "ultralytics/cfg/models/v8/ca-yolov8s.yaml"
-    cbam_yaml = "ultralytics/cfg/models/v8/yolov8-cbam.yaml"
-    se_yaml = "ultralytics/cfg/models/v8/yolov8-se.yaml"
+    ca_yaml = "ultralytics/cfg/models/v8/yolov8s-ca.yaml"
+    cbam_yaml = "ultralytics/cfg/models/v8/yolov8s-cbam.yaml"
+    se_yaml = "ultralytics/cfg/models/v8/yolov8s-se.yaml"
     yolov8_yaml = "ultralytics/cfg/models/v8/yolov8s.yaml"
 
     cbam_head_yaml =  "ultralytics/cfg/models/v8/yolov8s-cbam-head.yaml"
@@ -39,10 +39,10 @@ if __name__ == '__main__':
     yolov3_yaml = "ultralytics/cfg/models/v3/yolov3s.yaml"
 
 
-    csppc_min_yaml = "ultralytics/cfg/models/v8/yolov8-CSPPC.yaml"
+    csppc_min_yaml = "ultralytics/cfg/models/v8/yolov8s-CSPPC.yaml"
 
-    # method_yamls = [ca_yaml,cbam_yaml,se_yaml,yolov8_yaml,cbam_head_yaml,ca_head_yaml,se_head_yaml,p2_yaml,ghost_yaml,yolov5_yaml,yolov3_yaml]
-    method_yamls = [cbam_yaml]
+    method_yamls = [ca_yaml,cbam_yaml,se_yaml,yolov8_yaml,cbam_head_yaml,ca_head_yaml,se_head_yaml,yolov5_yaml,yolov3_yaml,csppc_min_yaml]
+    # method_yamls = [csppc_min_yaml]
     # optimizers = ["Adam","NAdam","SGD","RAdam","RMSProp","AdamW"] #Adam, AdamW, NAdam, RAdam, RMSProp, SGD, auto
     # method_yamls = [p2_yaml,ghost_yaml,yolov5_yaml,yolov3_yaml] #cbam_head_yaml,
     train_datas = [train_data]
@@ -63,9 +63,9 @@ if __name__ == '__main__':
                                 name=optimizer + "_" + data.split('/')[-1].split('.')[0] + "_" +
                                      yaml.split('/')[-1].split('.')[
                                          0] + "_" + str(epochs))
-                    model
-                    print("method_yaml:", yaml,data,"info.........")
-                    #print(model.info(detailed=True, verbose=True))
+                    with open('TrainTestFile.txt', 'a') as f:
+                        print("method_yaml:", yaml,data,"info.........",end='\n',file=f)
+                        # print(model.info(detailed=True, verbose=True),end='\n',file=f)
                     print("model info running ENDDDDDDD...\n\n")
                 except:
                     print("error method_yaml:",yaml,"train_data:",data,optimizer,"running...",end = "\n\n\n\n",sep=" ")

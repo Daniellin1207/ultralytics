@@ -193,7 +193,7 @@ class DetectionValidator(BaseValidator):
         LOGGER.info(pf % ('all', self.seen, self.nt_per_class.sum(), self.metrics.mean_results()[0] * 100,
                           self.metrics.mean_results()[1] * 100, self.metrics.mean_results()[1] * 100,
                           self.metrics.mean_results()[3] * 100))
-        with open(fileName, 'w') as f:
+        with open(fileName, 'a') as f:
             print(pf % ('all', self.seen, self.nt_per_class.sum(), self.metrics.mean_results()[0] * 100,
                           self.metrics.mean_results()[1] * 100, self.metrics.mean_results()[1] * 100,
                           self.metrics.mean_results()[3] * 100),file = f)
@@ -210,7 +210,7 @@ class DetectionValidator(BaseValidator):
                 LOGGER.info(pf % (self.names[c], self.seen, self.nt_per_class[c], self.metrics.class_result(i)[0] * 100,
                                   self.metrics.class_result(i)[1] * 100, self.metrics.class_result(i)[2] * 100,
                                   self.metrics.class_result(i)[3] * 100))
-                with open(fileName, 'w') as f:
+                with open(fileName, 'a') as f:
                     print(pf % (self.names[c], self.seen, self.nt_per_class[c], self.metrics.class_result(i)[0] * 100,
                                   self.metrics.class_result(i)[1] * 100, self.metrics.class_result(i)[2] * 100,
                                   self.metrics.class_result(i)[3] * 100), file=f)

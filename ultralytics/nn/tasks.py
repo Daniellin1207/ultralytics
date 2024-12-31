@@ -945,6 +945,8 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
             C2fCIB,
             CSPPC,
         }:
+            if SPPF == m:
+                pass
             c1, c2 = ch[f], args[0]
             if c2 != nc:  # if c2 not equal to number of classes (i.e. for Classify() output)
                 c2 = make_divisible(min(c2, max_channels) * width, 8)
@@ -990,8 +992,10 @@ def parse_model(d, ch, verbose=True):  # model_dict, input_channels(3)
                 c2 = make_divisible(min(c2, max_channels) * width, 8)
             args = [c1, *args[1:]]
         elif m in {CoordAttention}:
-            c2 = ch[f] # 为了引用下SEAttention
-            args = [ch[f], *args]
+            c1, c2 = ch[f], args[0] # 为了引用下SEAttention
+            if c2 != nc:
+                c2 = make_divisible(min(c2, max_channels) * width, 8)
+            args = [c1,c2,*args[1:]]
         else:
             c2 = ch[f]
 

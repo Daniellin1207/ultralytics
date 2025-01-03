@@ -470,6 +470,10 @@ class BaseTrainer:
                 f"\n{epoch - self.start_epoch + 1} epochs completed in "
                 f"{(time.time() - self.train_time_start) / 3600:.3f} hours."
             )
+            with open("TrainTestFile.txt",'a') as f:
+                print(
+                f"\n{epoch - self.start_epoch + 1} epochs completed in "
+                f"{(time.time() - self.train_time_start) / 3600:.3f} hours.",file=f)
             self.final_eval()
             if self.args.plots:
                 self.plot_metrics()
